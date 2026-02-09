@@ -10,8 +10,6 @@ dist/
 .claude/
 
 # Environment files
-.env
-.env.*
 !.env.example
 
 # IDE
@@ -33,3 +31,4 @@ Thumbs.db
 
 # Compiled extensions
 *.so
+config.bat
