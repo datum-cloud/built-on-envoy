@@ -11,8 +11,6 @@ out/
 .claude/
 
 # Environment files
-.env
-.env.*
 !.env.example
 
 # IDE
@@ -41,3 +39,4 @@ Thumbs.db
 **/Cargo.lock
 **/*.dylib
 **/.rustc_info.json
+config.bat
