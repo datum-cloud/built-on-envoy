@@ -31,4 +31,5 @@ Thumbs.db
 
 # Compiled extensions
 *.so
-config.bat
+.env
+.env.local
