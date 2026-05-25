@@ -39,4 +39,5 @@ Thumbs.db
 **/Cargo.lock
 **/*.dylib
 **/.rustc_info.json
-config.bat
+.env
+.env.local
