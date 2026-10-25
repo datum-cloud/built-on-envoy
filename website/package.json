@@ -21,6 +21,9 @@
     "@types/node": "^25.0.9"
   },
   "overrides": {
-    "lodash-es": "^4.17.23"
+    "lodash-es": "^4.17.23",
+    "mermaid": {
+      "katex": "0.18.10"
+    }
   }
 }
