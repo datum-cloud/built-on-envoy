@@ -2,6 +2,8 @@ module github.com/tetratelabs/built-on-envoy/cli/tools
 
 go 1.26.1
 
+toolchain go1.27.4
+
 tool (
 	github.com/apache/skywalking-eyes/cmd/license-eye
 	github.com/golangci/golangci-lint/v2/cmd/golangci-lint

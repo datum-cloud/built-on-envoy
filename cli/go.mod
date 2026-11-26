@@ -2,6 +2,8 @@ module github.com/tetratelabs/built-on-envoy/cli
 
 go 1.26.1
 
+toolchain go1.27.4
+
 require (
 	github.com/alecthomas/kong v1.13.0
 	github.com/envoyproxy/go-control-plane/envoy v1.36.1-0.20260127061403-fa333f4b1886

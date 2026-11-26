@@ -2,6 +2,8 @@ module github.com/tetratelabs/built-on-envoy/cli/tools/gen-cli-docs
 
 go 1.26.1
 
+toolchain go1.27.4
+
 require (
 	github.com/alecthomas/kong v1.13.0
 	github.com/tetratelabs/built-on-envoy/cli v0.0.0

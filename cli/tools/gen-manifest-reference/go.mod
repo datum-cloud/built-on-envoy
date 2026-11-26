@@ -2,6 +2,8 @@ module github.com/tetratelabs/built-on-envoy/cli/tools/gen-manifest-reference
 
 go 1.26.1
 
+toolchain go1.27.4
+
 require (
 	github.com/tetratelabs/built-on-envoy/cli v0.0.0-00010101000000-000000000000
 	golang.org/x/text v0.41.0

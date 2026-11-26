@@ -4,7 +4,7 @@
 # the root of the repo.
 
 # Build the manager binary
-FROM golang:1.26.1 AS builder
+FROM golang:1.27.4 AS builder
 
 WORKDIR /workspace
 COPY . .
