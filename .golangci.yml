@@ -16,17 +16,6 @@ linters:
     - staticcheck
     - testifylint
     - unconvert
-  exclusions:
-    rules:
-      - linters: [gosec]
-        path: extensions/composer/bedrock-guardrails/callback.go
-        text: "G602"
-      - linters: [gosec]
-        path: extensions/composer/goplugin-loader/imagefetcher/env.go
-        text: "G703"
-      - linters: [gosec]
-        path: extensions/composer/token-exchange/.*_test.go
-        text: "G101|G117"
   settings:
     gocritic:
       enabled-tags:
