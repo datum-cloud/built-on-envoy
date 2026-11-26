@@ -23,7 +23,7 @@ func BuildGoBinaryOnDemand(env, binaryName, packagePath string) (string, error) 
 		if !filepath.IsAbs(envPath) {
 			envPath = filepath.Join(FindProjectRoot(), envPath)
 		}
-		if _, err := os.Stat(envPath); err != nil {
+		if _, err := statInDir(envPath); err != nil {
 			return "", fmt.Errorf("%s path does not exist: %s", env, envPath)
 		}
 		fmt.Fprintf(os.Stderr, "Using %s : %s\n", env, envPath)
@@ -79,4 +79,14 @@ func FindProjectRoot() string {
 		}
 		dir = parent
 	}
+}
+
+func statInDir(path string) (os.FileInfo, error) {
+	path = filepath.Clean(path)
+	root, err := os.OpenRoot(filepath.Dir(path))
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = root.Close() }()
+	return root.Stat(filepath.Base(path))
 }

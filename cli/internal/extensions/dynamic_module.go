@@ -104,6 +104,18 @@ func copyFile(src, dst string) error {
 	if err != nil {
 		return err
 	}
-	// #nosec G306 -- dynamic module library needs executable permissions
-	return os.WriteFile(dst, data, 0o755)
+	root, err := os.OpenRoot(filepath.Dir(dst))
+	if err != nil {
+		return err
+	}
+	defer func() { _ = root.Close() }()
+	out, err := root.OpenFile(filepath.Base(dst), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o755)
+	if err != nil {
+		return err
+	}
+	if _, err = out.Write(data); err != nil {
+		_ = out.Close()
+		return err
+	}
+	return out.Close()
 }
