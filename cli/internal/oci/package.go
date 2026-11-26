@@ -30,7 +30,13 @@ func PackageDirectory(dir string) (io.Reader, error) {
 	gw := gzip.NewWriter(&buf)
 	tw := tar.NewWriter(gw)
 
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	root, err := os.OpenRoot(dir)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = root.Close() }()
+
+	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -86,7 +92,7 @@ func PackageDirectory(dir string) (io.Reader, error) {
 			return nil
 		}
 
-		file, err := os.Open(filepath.Clean(path))
+		file, err := root.Open(relPath)
 		if err != nil {
 			return err
 		}

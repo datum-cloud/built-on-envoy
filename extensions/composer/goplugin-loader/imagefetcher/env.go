@@ -39,7 +39,7 @@ func OptionFromEnv() Option {
 	}
 
 	if secretPath := os.Getenv("GOPLUGIN_PULL_SECRET"); secretPath != "" {
-		data, err := os.ReadFile(filepath.Clean(secretPath))
+		data, err := readFileInDir(secretPath)
 		if err != nil {
 			fmt.Printf("warning: failed to read GOPLUGIN_PULL_SECRET %s: %v\n", secretPath, err)
 		} else {
@@ -53,4 +53,14 @@ func OptionFromEnv() Option {
 	) == "true"
 
 	return opt
+}
+
+func readFileInDir(path string) ([]byte, error) {
+	path = filepath.Clean(path)
+	root, err := os.OpenRoot(filepath.Dir(path))
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = root.Close() }()
+	return root.ReadFile(filepath.Base(path))
 }

@@ -40,24 +40,24 @@ func EqualStatus(code int) func(r *http.Response) bool {
 
 // CheckGet performs an HTTP GET request to the given URL and checks if it satisfies the provided condition.
 func CheckGet(ctx context.Context, url string, condition func(r *http.Response) bool) error {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-		return err
-	}
-	return CheckRequest(req, condition)
+	return CheckRequest(ctx, http.MethodGet, url, nil, condition)
 }
 
 // CheckPost performs an HTTP POST request to the given URL and checks if it satisfies the provided condition.
 func CheckPost(ctx context.Context, url string, condition func(r *http.Response) bool) error {
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, nil)
+	return CheckRequest(ctx, http.MethodPost, url, nil, condition)
+}
+
+// CheckRequest sends an HTTP request with the given method, URL and headers and checks if the response satisfies
+// the provided condition.
+func CheckRequest(ctx context.Context, method, url string, header http.Header, condition func(r *http.Response) bool) error {
+	req, err := http.NewRequestWithContext(ctx, method, url, nil)
 	if err != nil {
 		return err
 	}
-	return CheckRequest(req, condition)
-}
-
-// CheckRequest checks if the given HTTP request succeeds according to the provided condition.
-func CheckRequest(req *http.Request, condition func(r *http.Response) bool) error {
+	for k, v := range header {
+		req.Header[k] = v
+	}
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err

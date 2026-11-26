@@ -7,6 +7,8 @@ module github.com/tetratelabs/built-on-envoy/extensions/composer
 
 go 1.26.1
 
+toolchain go1.27.4
+
 require (
 	github.com/beevik/etree v1.6.0
 	github.com/cedar-policy/cedar-go v1.5.2

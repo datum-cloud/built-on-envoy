@@ -206,12 +206,12 @@ func (a *applyGuardrailCallback) OnHttpCalloutDone(_ uint64, result shared.HttpC
 // joinBody returns the body as a single byte slice, avoiding to call bytes.Join
 // when there is only one chunk which always returns a copy.
 func joinBody(body []shared.UnsafeEnvoyBuffer) []byte {
-	if len(body) == 1 {
-		return body[0].ToUnsafeBytes()
-	}
 	chunks := make([][]byte, len(body))
 	for i, b := range body {
 		chunks[i] = b.ToUnsafeBytes()
+	}
+	if len(chunks) == 1 {
+		return chunks[0]
 	}
 	return bytes.Join(chunks, nil)
 }

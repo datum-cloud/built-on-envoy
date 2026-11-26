@@ -129,11 +129,9 @@ func TestRustRemoteExtension(t *testing.T) {
 	ctx, cancel := context.WithTimeout(t.Context(), 3*time.Second)
 	t.Cleanup(cancel)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	require.NoError(t, err)
-	req.Header.Set("X-Forwarded-For", "192.168.1.50")
+	header := http.Header{"X-Forwarded-For": []string{"192.168.1.50"}}
 
-	require.NoError(t, internaltesting.CheckRequest(req, checkDenied))
+	require.NoError(t, internaltesting.CheckRequest(ctx, http.MethodGet, url, header, checkDenied))
 }
 
 func TestRustLocalExtension(t *testing.T) {
