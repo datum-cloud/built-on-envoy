@@ -20,7 +20,9 @@ on:
         type: string
 
 env:
-  OCI_REGISTRY: ghcr.io/tetratelabs
+  # The job authenticates with the calling repository's GITHUB_TOKEN, which can
+  # only push packages in that repository owner's namespace.
+  OCI_REGISTRY: ghcr.io/${{ github.repository_owner }}
 
 jobs:
   release-extensions:
@@ -40,7 +42,7 @@ jobs:
           platforms: amd64,arm64
       - uses: docker/login-action@v3
         with:
-          registry: ghcr.io/tetratelabs
+          registry: ${{ env.OCI_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
